@@ -30,6 +30,29 @@ const apple = [
   [640, 1136],
 ];
 
+const google = {
+  mdpi: [
+    320,
+    480,
+  ],
+  hdpi: [
+    480,
+    800,
+  ],
+  xhdpi: [
+    720,
+    1280,
+  ],
+  xxhdpi: [
+    960,
+    1600,
+  ],
+  xxxhdpi: [
+    1280,
+    1920,
+  ],
+};
+
 const generateApple = (image, iosDir) => {
   const launchImage = `${iosDir}${path.sep}LaunchImage.launchimage`;
   return Promise.resolve()
@@ -54,7 +77,17 @@ const generateApple = (image, iosDir) => {
 
 const generateGoogle = (image, androidDir) => Promise.resolve()
   .then(() => {
-
+    return Object.entries(google)
+      .map(
+        ([dpi, [width, height]]) => {
+          return image
+            .clone()
+            .resize(width, height)
+            .write(
+              `${androidDir}${path.sep}drawable-${dpi}${path.sep}splash.png`,
+            );
+          },
+      );
   });
 
 const getAppleProjectName = dir => fs
@@ -92,6 +125,7 @@ program.version(pkg.version)
           ],
         );
       })
+      .then(() => console.log('✅ done!'))
       .catch((e) => console.error(`❌ ${JSON.stringify(e)}`));
   });
 

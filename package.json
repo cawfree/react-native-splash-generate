@@ -1,5 +1,5 @@
 {
-  "name": "@cawfree/react-native-splash-generate",
+  "name": "react-native-splash-generate",
   "version": "1.0.0",
   "description": "Programmatically generates a launch image for all screen densities from a single image source.",
   "main": "index.js",

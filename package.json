@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "commander": "^2.20.0"
+    "commander": "^2.20.0",
+    "jimp": "^0.6.4"
   }
 }

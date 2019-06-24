@@ -9,11 +9,6 @@ Using [`npm`](https://www.npmjs.com/package/react-native-splash-generate):
 npm install -g react-native-splash-generate
 ```
 
-Using [`yarn`](https://www.npmjs.com/package/react-native-splash-generate):
-```bash
-yarn add --g react-native-splash-generate
-```
-
 ## ✍️ Example
 ```bash
 react-native-splash-generate /path/to/react/native/project/root /path/to/your/splash/image

@@ -13,6 +13,7 @@ const projectFiles = [
   'index.js',
 ];
 
+// XXX: Needs verification.
 const apple = [
   [1242, 2688],
   [2688, 1242],
@@ -23,19 +24,37 @@ const apple = [
   [1242, 2208],
   [2208, 1242],
   [750, 1334],
-  [640, 960],
   [640, 1136],
   [320, 480],
   [640, 960],
   [640, 1136],
 ];
 
-const generateApple = (iosDir) => Promise.resolve()
-  .then(() => {
-  });
+const generateApple = (image, iosDir) => {
+  const launchImage = `${iosDir}${path.sep}LaunchImage.launchimage`;
+  return Promise.resolve()
+    .then(() => {
+      if (fs.existsSync(launchImage)) {
+        return Promise.all(
+          fs.readdirSync(`${launchImage}${path.sep}`)
+            .map((e) => fs.unlinkSync(`${launchImage}${path.sep}${e}`)),
+        );
+      }
+      return fs.mkdirSync(
+        launchImage,
+        { recursive: true },
+      );
+    })
+    .then(() => fs.writeFileSync(
+      `${launchImage}${path.sep}Contents.json`,
+      JSON.stringify(Contents),
+    ))
+    .then(() => apple.map(([width, height], i) => image.clone().resize(width, height).write(`${launchImage}${path.sep}${i}.png`)));
+};
 
-const generateGoogle = (androidDir) => Promise.resolve()
+const generateGoogle = (image, androidDir) => Promise.resolve()
   .then(() => {
+
   });
 
 const getAppleProjectName = dir => fs
@@ -62,10 +81,12 @@ program.version(pkg.version)
         return Promise.all(
           [
             generateApple(
+              image.clone(),
               // XXX: Get project name?
               `${iosBase}${path.sep}${getAppleProjectName(iosBase)}${path.sep}Images.xcassets`,
             ),
             generateGoogle(
+              image.clone(),
               `${absProjectDir}${path.sep}android${path.sep}app${path.sep}src${path.sep}main${path.sep}res`,
             ),
           ],

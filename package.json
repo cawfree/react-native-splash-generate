@@ -1,0 +1,13 @@
+{
+  "name": "@cawfree/react-native-splash-generate",
+  "version": "1.0.0",
+  "description": "Programmatically generates a launch image for all screen densities from a single image source.",
+  "main": "index.js",
+  "repository": "https://github.com/cawfree/react-native-splash-generate",
+  "author": "Alex Thomas (@cawfree)",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "commander": "^2.20.0"
+  }
+}

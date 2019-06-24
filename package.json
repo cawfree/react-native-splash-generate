@@ -1,9 +1,9 @@
 {
   "name": "react-native-splash-generate",
   "bin": {
-    "react-native-splash-generate": "./index.js splash"
+    "react-native-splash-generate": "./index.js"
   },
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Programmatically generates a launch image for all screen densities from a single image source.",
   "main": "index.js",
   "repository": "https://github.com/cawfree/react-native-splash-generate",

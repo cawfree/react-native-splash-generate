@@ -55,6 +55,18 @@ const google = {
   ],
 };
 
+const ensureCorrectFitting = (image, width, height) => {
+  const {
+    width: srcWidth,
+    height: srcHeight,
+  } = image.bitmap;
+  return image
+    .cover(
+      width,
+      height,
+    );
+};
+
 const generateApple = (image, iosDir) => {
   const launchImage = `${iosDir}${path.sep}LaunchImage.launchimage`;
   return Promise.resolve()
@@ -74,7 +86,7 @@ const generateApple = (image, iosDir) => {
       `${launchImage}${path.sep}Contents.json`,
       JSON.stringify(Contents),
     ))
-    .then(() => apple.map(([width, height], i) => image.clone().resize(width, height).write(`${launchImage}${path.sep}${i}.png`)));
+    .then(() => apple.map(([width, height], i) => ensureCorrectFitting(image.clone(), width, height).write(`${launchImage}${path.sep}${i}.png`)));
 };
 
 const generateGoogle = (image, androidDir) => Promise.resolve()
@@ -82,13 +94,15 @@ const generateGoogle = (image, androidDir) => Promise.resolve()
     return Object.entries(google)
       .map(
         ([dpi, [width, height]]) => {
-          return image
-            .clone()
-            .resize(width, height)
-            .write(
-              `${androidDir}${path.sep}drawable-${dpi}${path.sep}splash.png`,
-            );
-          },
+          return ensureCorrectFitting(
+            image.clone(),
+            width,
+            height,
+          )
+          .write(
+            `${androidDir}${path.sep}drawable-${dpi}${path.sep}splash.png`,
+          );
+        },
       );
   });
 

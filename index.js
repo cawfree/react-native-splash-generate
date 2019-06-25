@@ -111,6 +111,13 @@ program.version(pkg.version)
       );
     }
     const iosBase = `${absProjectDir}${path.sep}ios`;
+    const appleProject = `${iosBase}${path.sep}${getAppleProjectName(iosBase)}`;
+    const hasXibFile = fs.existsSync(`${appleProject}${path.sep}LaunchScreen.xib`);
+    if (hasXibFile) {
+      console.warn(
+        `⚠️  Detected .xib launch screen in iOS your project. It is likely that this will override the generated splash screen image.`,
+      );
+    }
     return Jimp.read(imageSrc)
       .then((image) => {
         return Promise.all(
@@ -118,7 +125,7 @@ program.version(pkg.version)
             generateApple(
               image.clone(),
               // XXX: Get project name?
-              `${iosBase}${path.sep}${getAppleProjectName(iosBase)}${path.sep}Images.xcassets`,
+              `${appleProject}${path.sep}Images.xcassets`,
             ),
             generateGoogle(
               image.clone(),

@@ -94,8 +94,8 @@ const generateGoogle = (image, androidDir) => Promise.resolve()
 
 const getAppleProjectName = dir => fs
   .readdirSync(dir)
-  .filter(e =>  e.match(/.*\.(xcworkspace)/ig))
-  .map(e => e.substring(0, e.indexOf('.xcworkspace')))[0];
+  .filter(e =>  e.match(/.*\.(xcodeproj)/ig))
+  .map(e => e.substring(0, e.indexOf('.xcodeproj')))[0];
 
 program.version(pkg.version)
   .command('splash <projectDir> <imageSrc>')
